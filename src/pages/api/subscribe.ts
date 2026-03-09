@@ -12,8 +12,8 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const apiKey = import.meta.env.PUBLIC_EMAILOCTOPUS_API_KEY;
-  const listId = import.meta.env.PUBLIC_EMAILOCTOPUS_LIST_ID;
+  const apiKey = import.meta.env.EMAILOCTOPUS_API_KEY;
+  const listId = import.meta.env.EMAILOCTOPUS_LIST_ID;
 
   const response = await fetch(
     `https://emailoctopus.com/api/1.6/lists/${listId}/contacts`,
