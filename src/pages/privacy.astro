@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Privacyverklaring — Kindvrij Amsterdam"
+  description="Privacyverklaring van Kindvrij Amsterdam praatgroep."
+>
+  <style>
+    .page {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 8rem 2rem 5rem;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.15s;
+    }
+
+    .back:hover {
+      color: var(--forest);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--forest);
+      margin-bottom: 0.5rem;
+    }
+
+    .updated {
+      font-size: 0.82rem;
+      color: var(--warm-gray-light);
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--forest);
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p, li {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 0.75rem;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+  </style>
+
+  <div class="page">
+    <a href="/" class="back">← Terug naar de hoofdpagina</a>
+
+    <h1>Privacyverklaring</h1>
+    <p class="updated">Laatste update: maart 2026</p>
+
+    <p>
+      Kindvrij Amsterdam hecht grote waarde aan de privacy van de mensen die
+      zich aanmelden voor de praatgroep. In deze verklaring leggen we uit welke
+      gegevens we verzamelen, waarom, en hoe we ermee omgaan.
+    </p>
+
+    <h2>Welke gegevens verzamelen we?</h2>
+    <p>Via het aanmeldformulier verzamelen we:</p>
+    <ul>
+      <li>Voornaam (en optioneel achternaam)</li>
+      <li>E-mailadres</li>
+      <li>Optionele informatie: leeftijdscategorie en een persoonlijke toelichting</li>
+    </ul>
+
+    <h2>Waarvoor gebruiken we je gegevens?</h2>
+    <p>Je gegevens worden uitsluitend gebruikt om:</p>
+    <ul>
+      <li>Je op de hoogte te houden van de praatgroep en de pilot</li>
+      <li>Contact met je op te nemen over bijeenkomsten</li>
+    </ul>
+
+    <h2>Worden mijn gegevens gedeeld?</h2>
+    <p>
+      Nee. Je gegevens worden nooit verkocht, verhuurd of gedeeld met derden,
+      met uitzondering van EmailOctopus — de dienst die we gebruiken voor onze
+      e-maillijst. EmailOctopus is AVG-compliant.
+    </p>
+
+    <h2>Hoe lang bewaren we je gegevens?</h2>
+    <p>
+      We bewaren je gegevens zo lang als je aangemeld blijft. Je kunt je op elk
+      moment uitschrijven via de link onderaan elke e-mail.
+    </p>
+
+    <h2>Jouw rechten</h2>
+    <p>
+      Op basis van de AVG heb je het recht op inzage, correctie of verwijdering
+      van je gegevens. Stuur daarvoor een e-mail naar{' '}
+      <a href="mailto:hallo@kindvrij.amsterdam">hallo@kindvrij.amsterdam</a>.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Vragen over privacy? Neem contact op via{' '}
+      <a href="mailto:hallo@kindvrij.amsterdam">hallo@kindvrij.amsterdam</a>.
+    </p>
+  </div>
+</Layout>

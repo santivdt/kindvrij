@@ -1,0 +1,1246 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <style>
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(246, 240, 232, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(46, 74, 62, 0.08);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--forest);
+      letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      text-decoration: none;
+      padding: 0.5rem 1.25rem;
+      border: 1.5px solid var(--terracotta);
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--terracotta);
+      color: white;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 40%, rgba(46, 74, 62, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 80%, rgba(181, 96, 74, 0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 2rem;
+      max-width: 600px;
+      margin-left: auto;
+    }
+
+    .hero-tag {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 2rem;
+      height: 1px;
+      background: var(--terracotta);
+      display: block;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--warm-gray);
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.9rem 2rem;
+      background: var(--forest);
+      color: var(--cream);
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--forest-light);
+      color: var(--cream);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--warm-gray);
+      text-decoration: none;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--cream-dark);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      color: var(--forest);
+      border-color: var(--forest-muted);
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+    }
+
+    .hero-ornament {
+      position: relative;
+      width: min(380px, 90%);
+      aspect-ratio: 3 / 4;
+    }
+
+    .hero-ornament-inner {
+      width: 100%;
+      height: 100%;
+      border: 1.5px solid rgba(46, 74, 62, 0.2);
+      border-radius: 4px;
+      background: linear-gradient(135deg, rgba(46, 74, 62, 0.04) 0%, rgba(181, 96, 74, 0.04) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 3rem 2rem;
+    }
+
+    .ornament-quote {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--forest);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .ornament-divider {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--terracotta);
+      opacity: 0.6;
+    }
+
+    .ornament-text {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      text-align: center;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .ornament-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      opacity: 0.5;
+    }
+
+    /* ── Section base ── */
+    .section {
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .container-narrow {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    /* ── Intro section ── */
+    .intro {
+      background: var(--forest);
+      color: var(--cream);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .intro-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(246, 240, 232, 0.5);
+      padding-top: 0.5rem;
+    }
+
+    .intro-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-content h2 em {
+      font-style: italic;
+      color: rgba(201, 122, 94, 0.9);
+    }
+
+    .intro-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(246, 240, 232, 0.8);
+      margin-bottom: 1rem;
+    }
+
+    .intro-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .pilot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(181, 96, 74, 0.2);
+      border: 1px solid rgba(181, 96, 74, 0.4);
+      border-radius: 2px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(201, 122, 94, 0.9);
+      margin-bottom: 1.5rem;
+    }
+
+    .pilot-badge::before {
+      content: '◉';
+      font-size: 0.65rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── Context / Background section ── */
+    .context {
+      background: var(--cream);
+    }
+
+    .context-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      font-style: italic;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 4px;
+      padding: 2rem;
+      border: 1px solid rgba(46, 74, 62, 0.08);
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(46, 74, 62, 0.08);
+    }
+
+    .card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--warm-gray);
+      line-height: 1.75;
+    }
+
+    /* ── Stats strip ── */
+    .stats {
+      background: var(--cream-dark);
+      border-top: 1px solid rgba(46, 74, 62, 0.1);
+      border-bottom: 1px solid rgba(46, 74, 62, 0.1);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-right: 1px solid rgba(46, 74, 62, 0.1);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--terracotta);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      line-height: 1.5;
+    }
+
+    /* ── Quotes section ── */
+    .voices {
+      background: var(--forest);
+    }
+
+    .voices-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .voices-header .section-label {
+      color: rgba(201, 122, 94, 0.8);
+    }
+
+    .voices-header .section-title {
+      color: var(--cream);
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .quote-card {
+      background: rgba(246, 240, 232, 0.05);
+      border: 1px solid rgba(246, 240, 232, 0.1);
+      border-radius: 4px;
+      padding: 2rem;
+    }
+
+    .quote-mark {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--terracotta);
+      opacity: 0.4;
+      line-height: 0.6;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .quote-source {
+      font-size: 0.8rem;
+      color: rgba(246, 240, 232, 0.45);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Over de groep ── */
+    .about {
+      background: var(--cream);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 300;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+      line-height: 1.15;
+    }
+
+    .about-content h2 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .about-content p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 1rem;
+    }
+
+    .about-list {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--warm-black);
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    .about-list li:last-child {
+      border-bottom: none;
+    }
+
+    .about-list li::before {
+      content: '→';
+      color: var(--terracotta);
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .about-side {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .info-block {
+      background: var(--cream-dark);
+      border-radius: 4px;
+      padding: 1.5rem;
+      border-left: 3px solid var(--terracotta);
+    }
+
+    .info-block-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.4rem;
+    }
+
+    .info-block-value {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--forest);
+    }
+
+    .info-block-sub {
+      font-size: 0.82rem;
+      color: var(--warm-gray);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Form section ── */
+    .form-section {
+      background: var(--cream-dark);
+      border-top: 1px solid rgba(46, 74, 62, 0.1);
+    }
+
+    .form-wrapper {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .form-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .form-header h2 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .form-header p {
+      font-size: 0.95rem;
+      color: var(--warm-gray);
+      line-height: 1.7;
+    }
+
+    .form {
+      background: white;
+      border-radius: 6px;
+      padding: 2.5rem;
+      border: 1px solid rgba(46, 74, 62, 0.1);
+      box-shadow: 0 4px 30px rgba(46, 74, 62, 0.06);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--forest);
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      background: var(--cream);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 3px;
+      color: var(--warm-black);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--forest-muted);
+      background: white;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--warm-gray-light);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6e65' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: rgba(46, 74, 62, 0.04);
+      border-radius: 4px;
+      border: 1px solid rgba(46, 74, 62, 0.1);
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+      accent-color: var(--forest);
+      cursor: pointer;
+    }
+
+    .checkbox-label {
+      font-size: 0.82rem;
+      color: var(--warm-gray);
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .checkbox-label a {
+      color: var(--forest);
+    }
+
+    .form-divider {
+      height: 1px;
+      background: var(--cream-dark);
+      margin: 1.5rem 0;
+    }
+
+    .btn-submit {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 1rem;
+      background: var(--forest);
+      color: var(--cream);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--forest-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--warm-gray-light);
+      margin-top: 1rem;
+    }
+
+    .form-message {
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-message.success {
+      background: rgba(46, 74, 62, 0.08);
+      border: 1px solid rgba(46, 74, 62, 0.2);
+      color: var(--forest);
+    }
+
+    .form-message.error {
+      background: rgba(181, 96, 74, 0.08);
+      border: 1px solid rgba(181, 96, 74, 0.2);
+      color: var(--terracotta);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--warm-black);
+      color: rgba(246, 240, 232, 0.45);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+
+    .footer a {
+      color: rgba(246, 240, 232, 0.45);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .hero-content {
+        max-width: 100%;
+        margin: 0;
+        padding: 3rem 1.5rem;
+      }
+
+      .intro-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .intro-label {
+        display: none;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(46, 74, 62, 0.1);
+        padding: 2rem;
+      }
+
+      .stat-item:last-child {
+        border-bottom: none;
+      }
+
+      .quotes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form {
+        padding: 1.5rem;
+      }
+
+      .nav {
+        padding: 1rem 1.5rem;
+      }
+    }
+
+    /* ── Scroll animations ── */
+    @media (prefers-reduced-motion: no-preference) {
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Kindvrij Amsterdam</a>
+    <a href="#aanmelden" class="nav-cta">Aanmelden</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Praatgroep · Pilot · Amsterdam</span>
+      <h1 class="hero-title">
+        Jouw keuze,<br />
+        <em>jouw verhaal.</em>
+      </h1>
+      <p class="hero-sub">
+        Een open, veilige ruimte voor mensen in Amsterdam die bewust
+        kindvrij zijn — om te praten, te luisteren, en te verbinden
+        met anderen die begrijpen hoe dat voelt.
+      </p>
+      <div class="hero-actions">
+        <a href="#aanmelden" class="btn-primary">Meld je aan voor de pilot</a>
+        <a href="#over" class="btn-ghost">Lees meer ↓</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-ornament">
+        <div class="hero-ornament-inner">
+          <p class="ornament-quote">"Je hoeft niets uit te leggen aan mensen die het al begrijpen."</p>
+          <div class="ornament-divider"></div>
+          <p class="ornament-text">Een plek voor eerlijke gesprekken<br />zonder oordeel</p>
+          <div class="ornament-dot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro: het project -->
+  <section class="section intro" id="project">
+    <div class="container">
+      <div class="intro-grid">
+        <div>
+          <p class="intro-label">Over het project</p>
+        </div>
+        <div class="intro-content fade-in">
+          <span class="pilot-badge">Pilot — voorjaar 2026</span>
+          <h2>Verbinden rond<br /><em>een gedeelde keuze</em></h2>
+          <p>
+            Kindvrij Amsterdam is een nieuw initiatief: een praatgroep speciaal voor
+            mensen in Amsterdam die bewust hebben gekozen geen kinderen te krijgen.
+            We starten met een pilot — een kleine, informele groep om te ontdekken
+            wat we samen nodig hebben.
+          </p>
+          <p>
+            De groep is er voor iedereen die kindvrij is: of je nou jong bent en die
+            keuze net maakt, al jaren tevreden leeft zonder kinderen, of simpelweg
+            op zoek bent naar mensen die je leven herkennen zonder vraagtekens
+            of commentaar.
+          </p>
+          <p>
+            We beginnen klein, persoonlijk, en zonder grote agenda. Gewoon mensen
+            die samenkomen voor een eerlijk gesprek.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item fade-in">
+          <div class="stat-number">1 op 5</div>
+          <div class="stat-label">Nederlanders krijgt geen<br />kinderen — bewust of ongewild</div>
+        </div>
+        <div class="stat-item fade-in" style="transition-delay: 0.1s">
+          <div class="stat-number">72%</div>
+          <div class="stat-label">Kindvrije mensen ervaren<br />sociale druk om van mening te veranderen*</div>
+        </div>
+        <div class="stat-item fade-in" style="transition-delay: 0.2s">
+          <div class="stat-number">Groeit</div>
+          <div class="stat-label">Het aantal bewust kindvrije<br />mensen in Nederland stijgt elk jaar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achtergrond: kindvrij zijn -->
+  <section class="section context" id="over">
+    <div class="container">
+      <div class="context-header fade-in">
+        <p class="section-label">Achtergrond</p>
+        <h2 class="section-title">Bewust kindvrij zijn —<br /><em>wat betekent dat?</em></h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card fade-in">
+          <span class="card-icon">🌱</span>
+          <h3>Een bewuste keuze</h3>
+          <p>
+            Kindvrij zijn betekent bewust kiezen voor een leven zonder kinderen.
+            Niet uit onvermogen of toeval, maar uit persoonlijke overtuiging.
+            Dat kan gaan over vrijheid, duurzaamheid, carrière, persoonlijke waarden
+            — of simpelweg omdat het niet bij je past.
+          </p>
+        </div>
+        <div class="card fade-in" style="transition-delay: 0.1s">
+          <span class="card-icon">💬</span>
+          <h3>Maatschappelijke druk</h3>
+          <p>
+            "Maar wie zorgt er later voor jou?" "Je zult van gedachten veranderen."
+            "Dat is toch zo egoïstisch?" Kindvrije mensen kennen deze uitspraken maar
+            al te goed. Onze keuze wordt vaak in twijfel getrokken, ook door mensen
+            die het goed bedoelen.
+          </p>
+        </div>
+        <div class="card fade-in" style="transition-delay: 0.2s">
+          <span class="card-icon">🤝</span>
+          <h3>Herkenning en verbinding</h3>
+          <p>
+            Wat helpt? Mensen vinden die je niet hoeft uit te leggen, die je verhaal
+            herkennen. Praatgroepen voor kindvrije mensen bestaan al in het buitenland
+            — nu ook in Amsterdam. Niet om anderen te overtuigen, maar gewoon om
+            samen te zijn.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quotes / herkenning -->
+  <section class="section voices">
+    <div class="container">
+      <div class="voices-header fade-in">
+        <p class="section-label">Herkenning</p>
+        <h2 class="section-title" style="color: var(--cream)">Klinkt dit<br /><em>bekend?</em></h2>
+      </div>
+      <div class="quotes-grid">
+        <div class="quote-card fade-in">
+          <span class="quote-mark">"</span>
+          <p class="quote-text">
+            Ik ben het steeds opnieuw uitleggen zo moe. Het voelt alsof
+            mensen mijn keuze zien als een probleem dat opgelost moet worden.
+          </p>
+          <p class="quote-source">— Herkenbaar voor veel kindvrije mensen</p>
+        </div>
+        <div class="quote-card fade-in" style="transition-delay: 0.1s">
+          <span class="quote-mark">"</span>
+          <p class="quote-text">
+            In mijn vriendenkring zijn er amper mensen zonder kinderen.
+            Ik hou van ze, maar soms mis ik gewoon iemand die begrijpt
+            hoe mijn leven eruitziet.
+          </p>
+          <p class="quote-source">— Herkenbaar voor veel kindvrije mensen</p>
+        </div>
+        <div class="quote-card fade-in">
+          <span class="quote-mark">"</span>
+          <p class="quote-text">
+            Ik twijfel soms, maar niet aan mijn keuze — wel aan hoe ik
+            daarmee omga als iedereen me met grote ogen aankijkt.
+          </p>
+          <p class="quote-source">— Herkenbaar voor veel kindvrije mensen</p>
+        </div>
+        <div class="quote-card fade-in" style="transition-delay: 0.1s">
+          <span class="quote-mark">"</span>
+          <p class="quote-text">
+            Op verjaardagen praten mensen alleen over hun kinderen.
+            Ik sta er gewoon bij. Ik verlang naar gesprekken over
+            andere dingen — mijn leven is ook vol en mooi.
+          </p>
+          <p class="quote-source">— Herkenbaar voor veel kindvrije mensen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Over de groep -->
+  <section class="section about" id="groep">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content fade-in">
+          <h2>Wat kun je<br /><em>verwachten?</em></h2>
+          <p>
+            De praatgroep is een laagdrempelige, informele bijeenkomst. Geen therapie,
+            geen debat, geen politiek statement. Gewoon mensen die bij elkaar komen
+            om te praten over wat het betekent kindvrij te zijn — in deze stad, in
+            deze tijd.
+          </p>
+          <p>
+            We starten met een pilot van een paar sessies om te voelen hoe de groep
+            werkt, wat we nodig hebben, en hoe we het willen inrichten.
+          </p>
+          <ul class="about-list">
+            <li>Kleine groep — maximaal 8 tot 10 mensen per sessie</li>
+            <li>Veilige, vertrouwelijke setting</li>
+            <li>Geen verplichtingen of lidmaatschap</li>
+            <li>Toegankelijk voor iedereen die zich kindvrij identificeert</li>
+            <li>Locatie in Amsterdam (wordt bekendgemaakt na aanmelding)</li>
+            <li>Frequentie en tijdstip in overleg</li>
+          </ul>
+        </div>
+        <div class="about-side fade-in" style="transition-delay: 0.15s">
+          <div class="info-block">
+            <div class="info-block-label">Fase</div>
+            <div class="info-block-value">Pilot</div>
+            <div class="info-block-sub">We starten binnenkort — meld je aan om op de hoogte te blijven</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Locatie</div>
+            <div class="info-block-value">Amsterdam</div>
+            <div class="info-block-sub">Exacte locatie volgt na aanmelding</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Kosten</div>
+            <div class="info-block-value">Gratis</div>
+            <div class="info-block-sub">De pilot is kosteloos</div>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Voor wie</div>
+            <div class="info-block-value">Iedereen</div>
+            <div class="info-block-sub">Die zich bewust kindvrij identificeert — alle leeftijden, achtergronden, situaties</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aanmeldformulier -->
+  <section class="section form-section" id="aanmelden">
+    <div class="form-wrapper">
+      <div class="form-header fade-in">
+        <p class="section-label">Aanmelden</p>
+        <h2>Doe mee aan<br /><em>de pilot</em></h2>
+        <p>
+          Vul het formulier in en we nemen contact op zodra we meer details
+          hebben over de eerste bijeenkomst. Je zit nergens aan vast.
+        </p>
+      </div>
+
+      <form class="form fade-in" id="signup-form">
+        <div id="form-success" class="form-message" role="alert" aria-live="polite" style="display:none">
+          ✓ Bedankt! Je aanmelding is ontvangen. We nemen snel contact op.
+        </div>
+        <div id="form-error" class="form-message" role="alert" aria-live="polite" style="display:none">
+          Er is iets misgegaan. Probeer het opnieuw of stuur een e-mail.
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first_name">Voornaam *</label>
+            <input type="text" id="first_name" name="first_name" required placeholder="Jouw voornaam" autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="last_name">Achternaam</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Optioneel" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mailadres *</label>
+          <input type="email" id="email" name="email" required placeholder="jouw@email.nl" autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="age_range">Leeftijdscategorie</label>
+          <select id="age_range" name="age_range">
+            <option value="">Selecteer (optioneel)</option>
+            <option value="25-35">25–35 jaar</option>
+            <option value="35-45">35–45 jaar</option>
+            <option value="45+">45+</option>
+          </select>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <label class="checkbox-group" for="privacy">
+          <input type="checkbox" id="privacy" name="privacy" required />
+          <span class="checkbox-label">
+            Ik ga akkoord met de <a href="/privacy" target="_blank">privacyverklaring</a>.
+            Je gegevens worden uitsluitend gebruikt om je op de hoogte te houden
+            van de praatgroep en worden nooit gedeeld met derden.
+          </span>
+        </label>
+
+        <button type="submit" class="btn-submit" id="submit-btn">
+          Aanmelden voor de pilot
+        </button>
+
+        <p class="form-note">
+          * Verplichte velden. Je kunt je altijd uitschrijven.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>
+      Kindvrij Amsterdam &nbsp;·&nbsp;
+      <a href="/privacy">Privacyverklaring</a> &nbsp;·&nbsp;
+      <a href="mailto:hallo@kindvrij.amsterdam">hallo@kindvrij.amsterdam</a>
+    </p>
+    <p style="margin-top: 0.5rem; font-size: 0.72rem; opacity: 0.6;">
+      * Cijfer ter illustratie — exacte data varieert per onderzoek.
+    </p>
+  </footer>
+
+  <script>
+    // ── Scroll-triggered fade animations ──
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+    // ── Form submission ──
+    const form = document.getElementById('signup-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const successMsg = document.getElementById('form-success') as HTMLElement;
+    const errorMsg = document.getElementById('form-error') as HTMLElement;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+
+      const data = new FormData(form);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Bezig met aanmelden…';
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: data.get('first_name'),
+            lastName: data.get('last_name'),
+            email: data.get('email'),
+            ageRange: data.get('age_range'),
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          if (result.existing) {
+            successMsg.textContent = '✓ Je staat al ingeschreven — we zien je bij de pilot!';
+          }
+          successMsg.classList.add('success');
+          successMsg.style.display = 'block';
+          form.reset();
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          throw new Error(result.error || 'Onbekende fout');
+        }
+      } catch (err) {
+        console.error(err);
+        errorMsg.classList.add('error');
+        errorMsg.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Aanmelden voor de pilot';
+      }
+    });
+  </script>
+</Layout>
