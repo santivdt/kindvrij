@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Gelukt! — Kindvrij Amsterdam"
+  description="Je aanmelding voor de praatgroep is ontvangen."
+>
+  <style>
+    .page {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      background: var(--cream);
+    }
+
+    .card {
+      max-width: 620px;
+      width: 100%;
+    }
+
+    .check {
+      width: 52px;
+      height: 52px;
+      background: rgba(46, 74, 62, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
+
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    h1 em {
+      font-style: italic;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--warm-gray);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(46, 74, 62, 0.12);
+      margin-bottom: 2.5rem;
+    }
+
+    .details-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-gray-light);
+      margin-bottom: 1.25rem;
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .detail-key {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: var(--forest);
+      min-width: 90px;
+      padding-top: 0.05rem;
+    }
+
+    .detail-val {
+      font-size: 0.88rem;
+      color: var(--warm-gray);
+      line-height: 1.5;
+    }
+
+    .note {
+      background: rgba(46, 74, 62, 0.05);
+      border: 1px solid rgba(46, 74, 62, 0.12);
+      border-radius: 4px;
+      padding: 1rem 1.25rem;
+      font-size: 0.82rem;
+      color: var(--warm-gray);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .back {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      text-decoration: none;
+      border-bottom: 1px solid var(--cream-dark);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .back:hover {
+      color: var(--forest);
+      border-color: var(--forest-muted);
+    }
+  </style>
+
+  <div class="page">
+    <div class="card">
+      <div class="check">✓</div>
+      <p class="label">Aanmelding bevestigd</p>
+      <h1>Welkom bij<br /><em>de praatgroep.</em></h1>
+      <p class="intro">
+        Je betaling is ontvangen en je plek is gereserveerd. Hieronder vind je
+        de details voor de eerste bijeenkomst. Tot snel!
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="details-label">Details eerste sessie</p>
+      <div class="details">
+        <div class="detail-row">
+          <span class="detail-key">Datum</span>
+          <span class="detail-val">Zaterdag 25 april 2026</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Tijd</span>
+          <span class="detail-val">15:00 – 17:00</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Locatie</span>
+          <span class="detail-val">Studio Brecht<br />Weteringschans 157, Amsterdam<br />(derde verdieping, bel aan)</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Groepsgrootte</span>
+          <span class="detail-val">Max. 8 deelnemers</span>
+        </div>
+      </div>
+
+      <div class="note">
+        Je ontvangt ook een bevestigingsmail. Kun je onverhoopt niet komen?
+        Stuur dan een berichtje naar
+        <a href="mailto:hallo@kindvrij.amsterdam">hallo@kindvrij.amsterdam</a>.
+      </div>
+
+      <a href="/" class="back">← Terug naar de homepage</a>
+    </div>
+  </div>
+</Layout>

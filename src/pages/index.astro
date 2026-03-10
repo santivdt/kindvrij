@@ -776,6 +776,48 @@ import Layout from '../layouts/Layout.astro';
       color: var(--terracotta);
     }
 
+    /* ── Praatgroep betaalformulier ── */
+    .praatgroep-section {
+      background: var(--forest);
+      border-top: 1px solid rgba(46, 74, 62, 0.1);
+    }
+
+    .praatgroep-section .section-label {
+      color: rgba(201, 122, 94, 0.8);
+    }
+
+    .praatgroep-section .form-header h2 {
+      color: var(--cream);
+    }
+
+    .praatgroep-section .form-header p {
+      color: rgba(246, 240, 232, 0.65);
+    }
+
+    .price-badge {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      padding: 1.1rem 1.5rem;
+      background: rgba(246, 240, 232, 0.07);
+      border: 1px solid rgba(246, 240, 232, 0.15);
+      border-radius: 4px;
+    }
+
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+
+    .price-label {
+      font-size: 0.85rem;
+      color: rgba(246, 240, 232, 0.5);
+    }
+
     /* ── Footer ── */
     .footer {
       background: var(--warm-black);
@@ -1096,6 +1138,75 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- Praatgroep aanmelden (betaald) -->
+  <section class="section praatgroep-section" id="praatgroep">
+    <div class="form-wrapper">
+      <div class="form-header fade-in">
+        <p class="section-label">Praatgroep</p>
+        <h2>Doe mee aan<br /><em>de pilot-sessies</em></h2>
+        <p>
+          Reserveer je plek in de praatgroep. Na betaling ontvang je alle
+          details over locatie, datum en tijdstip.
+        </p>
+      </div>
+
+      <div class="price-badge fade-in">
+        <span class="price-amount">€ 7,50</span>
+        <span class="price-label">per sessie · eenmalige betaling via iDEAL of creditcard</span>
+      </div>
+
+      <form class="form fade-in" id="praatgroep-form">
+        <div id="praatgroep-error" class="form-message" role="alert" aria-live="polite" style="display:none">
+          Er is iets misgegaan. Probeer het opnieuw.
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pg_first_name">Voornaam *</label>
+            <input type="text" id="pg_first_name" name="first_name" required placeholder="Jouw voornaam" autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="pg_last_name">Achternaam</label>
+            <input type="text" id="pg_last_name" name="last_name" placeholder="Optioneel" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pg_email">E-mailadres *</label>
+          <input type="email" id="pg_email" name="email" required placeholder="jouw@email.nl" autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="pg_age_range">Leeftijdscategorie</label>
+          <select id="pg_age_range" name="age_range">
+            <option value="">Selecteer (optioneel)</option>
+            <option value="25-35">25–35 jaar</option>
+            <option value="35-45">35–45 jaar</option>
+            <option value="45+">45+</option>
+          </select>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <label class="checkbox-group" for="pg_privacy">
+          <input type="checkbox" id="pg_privacy" name="privacy" required />
+          <span class="checkbox-label">
+            Ik ga akkoord met de <a href="/privacy" target="_blank">privacyverklaring</a>.
+            Je gegevens worden uitsluitend gebruikt voor de praatgroep.
+          </span>
+        </label>
+
+        <button type="submit" class="btn-submit" id="praatgroep-submit-btn">
+          Aanmelden & betalen — € 7,50
+        </button>
+
+        <p class="form-note">
+          * Verplichte velden. Betaling via Stripe (iDEAL of creditcard).
+        </p>
+      </form>
+    </div>
+  </section>
+
   <!-- Aanmeldformulier -->
   <section class="section form-section" id="aanmelden">
     <div class="form-wrapper">
@@ -1190,6 +1301,47 @@ import Layout from '../layouts/Layout.astro';
     );
 
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+    // ── Praatgroep form (Stripe) ──
+    const praatgroepForm = document.getElementById('praatgroep-form') as HTMLFormElement;
+    const praatgroepBtn = document.getElementById('praatgroep-submit-btn') as HTMLButtonElement;
+    const praatgroepError = document.getElementById('praatgroep-error') as HTMLElement;
+
+    praatgroepForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      praatgroepError.style.display = 'none';
+
+      const data = new FormData(praatgroepForm);
+      praatgroepBtn.disabled = true;
+      praatgroepBtn.textContent = 'Bezig…';
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: data.get('first_name'),
+            lastName: data.get('last_name'),
+            email: data.get('email'),
+            ageRange: data.get('age_range'),
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.url) {
+          window.location.href = result.url;
+        } else {
+          throw new Error('Geen redirect URL');
+        }
+      } catch (err) {
+        console.error(err);
+        praatgroepError.classList.add('error');
+        praatgroepError.style.display = 'block';
+        praatgroepBtn.disabled = false;
+        praatgroepBtn.textContent = 'Aanmelden & betalen — € 7,50';
+      }
+    });
 
     // ── Form submission ──
     const form = document.getElementById('signup-form') as HTMLFormElement;
