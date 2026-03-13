@@ -1,0 +1,393 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Betaling mislukt — Kindvrij Amsterdam"
+  description="Je betaling is niet gelukt. Probeer het opnieuw."
+>
+  <style>
+    .page {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      background: var(--cream);
+    }
+
+    .card {
+      max-width: 620px;
+      width: 100%;
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(181, 96, 74, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      font-size: 1.4rem;
+    }
+
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--warm-gray);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(46, 74, 62, 0.12);
+      margin-bottom: 2.5rem;
+    }
+
+    .form-heading {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+    }
+
+    .form {
+      background: white;
+      border-radius: 6px;
+      padding: 2.5rem;
+      border: 1px solid rgba(46, 74, 62, 0.1);
+      box-shadow: 0 4px 30px rgba(46, 74, 62, 0.06);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--forest);
+      margin-bottom: 0.4rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      background: var(--cream);
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 3px;
+      color: var(--warm-black);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+      border-color: var(--forest-muted);
+      background: white;
+    }
+
+    input::placeholder {
+      color: var(--warm-gray-light);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6e65' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-divider {
+      height: 1px;
+      background: var(--cream-dark);
+      margin: 1.5rem 0;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: rgba(46, 74, 62, 0.04);
+      border-radius: 4px;
+      border: 1px solid rgba(46, 74, 62, 0.1);
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+      accent-color: var(--forest);
+      cursor: pointer;
+    }
+
+    .checkbox-label {
+      font-size: 0.82rem;
+      color: var(--warm-gray);
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .checkbox-label a {
+      color: var(--forest);
+    }
+
+    .btn-submit {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 1rem;
+      background: var(--forest);
+      color: var(--cream);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--forest-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-error {
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      margin-bottom: 1.25rem;
+      background: rgba(181, 96, 74, 0.08);
+      border: 1px solid rgba(181, 96, 74, 0.2);
+      color: var(--terracotta);
+      display: none;
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--warm-gray-light);
+      margin-top: 1rem;
+    }
+
+    .price-badge {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: rgba(46, 74, 62, 0.04);
+      border: 1px solid rgba(46, 74, 62, 0.1);
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-amount {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--forest);
+    }
+
+    .price-label {
+      font-size: 0.82rem;
+      color: var(--warm-gray);
+    }
+
+    .back {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      text-decoration: none;
+      border-bottom: 1px solid var(--cream-dark);
+      padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .back:hover {
+      color: var(--forest);
+      border-color: var(--forest-muted);
+    }
+
+    @media (max-width: 600px) {
+      .form {
+        padding: 1.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="page">
+    <div class="card">
+      <div class="icon">✕</div>
+      <p class="label">Betaling niet gelukt</p>
+      <h1>Probeer het<br /><em>opnieuw.</em></h1>
+      <p class="intro">
+        Je betaling is niet afgerond — dit kan komen door een geannuleerde
+        iDEAL-betaling, een verlopen sessie of een andere fout. Geen zorgen,
+        je plek is nog niet vergeven. Vul het formulier hieronder opnieuw in.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="form-heading">Aanmelden voor de pilot</p>
+
+      <div class="price-badge">
+        <span class="price-amount">€ 7,50</span>
+        <span class="price-label">per sessie · eenmalige betaling via iDEAL of creditcard</span>
+      </div>
+
+      <form class="form" id="retry-form">
+        <div id="retry-error" class="form-error" role="alert" aria-live="polite">
+          Er is iets misgegaan. Probeer het opnieuw of stuur een e-mail naar
+          <a href="mailto:hallo@kindvrij.amsterdam">hallo@kindvrij.amsterdam</a>.
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first_name">Voornaam *</label>
+            <input type="text" id="first_name" name="first_name" required placeholder="Jouw voornaam" autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="last_name">Achternaam</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Optioneel" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mailadres *</label>
+          <input type="email" id="email" name="email" required placeholder="jouw@email.nl" autocomplete="email" />
+        </div>
+
+        <div class="form-group">
+          <label for="age_range">Leeftijdscategorie</label>
+          <select id="age_range" name="age_range">
+            <option value="">Selecteer (optioneel)</option>
+            <option value="25-35">25–35 jaar</option>
+            <option value="35-45">35–45 jaar</option>
+            <option value="45+">45+</option>
+          </select>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <label class="checkbox-group" for="privacy">
+          <input type="checkbox" id="privacy" name="privacy" required />
+          <span class="checkbox-label">
+            Ik ga akkoord met de <a href="/privacy" target="_blank">privacyverklaring</a>.
+            Je gegevens worden uitsluitend gebruikt voor de praatgroep.
+          </span>
+        </label>
+
+        <button type="submit" class="btn-submit" id="retry-submit-btn">
+          Aanmelden & betalen — € 7,50
+        </button>
+
+        <p class="form-note">
+          * Verplichte velden. Betaling via Stripe (iDEAL of creditcard).
+        </p>
+      </form>
+
+      <a href="/" class="back">← Terug naar de homepage</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('retry-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('retry-submit-btn') as HTMLButtonElement;
+    const errorEl = document.getElementById('retry-error') as HTMLElement;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorEl.style.display = 'none';
+
+      const data = new FormData(form);
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Bezig…';
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: data.get('first_name'),
+            lastName: data.get('last_name'),
+            email: data.get('email'),
+            ageRange: data.get('age_range'),
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.url) {
+          window.location.href = result.url;
+        } else {
+          throw new Error('Geen redirect URL');
+        }
+      } catch (err) {
+        console.error(err);
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Aanmelden & betalen — € 7,50';
+      }
+    });
+  </script>
+</Layout>

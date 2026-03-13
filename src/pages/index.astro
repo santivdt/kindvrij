@@ -167,6 +167,27 @@ import Layout from '../layouts/Layout.astro';
       border-color: var(--forest-muted);
     }
 
+    .btn-secondary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--forest);
+      text-decoration: none;
+      border-radius: 2px;
+      border: 1.5px solid rgba(46, 74, 62, 0.35);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(46, 74, 62, 0.06);
+      border-color: var(--forest);
+      transform: translateY(-1px);
+    }
+
     .hero-visual {
       position: relative;
       display: flex;
@@ -226,6 +247,60 @@ import Layout from '../layouts/Layout.astro';
       border-radius: 50%;
       background: var(--terracotta);
       opacity: 0.5;
+    }
+
+    /* ── Nieuwsbrief strip ── */
+    .nieuwsbrief-section {
+      background: var(--cream-dark);
+      border-top: 1px solid rgba(46, 74, 62, 0.1);
+      border-bottom: 1px solid rgba(46, 74, 62, 0.1);
+      padding: 4rem 2rem;
+    }
+
+    .nieuwsbrief-inner {
+      max-width: 580px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .nieuwsbrief-inner .section-label {
+      margin-bottom: 0.75rem;
+    }
+
+    .nieuwsbrief-inner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: var(--forest);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .nieuwsbrief-inner h2 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .nieuwsbrief-inner p {
+      font-size: 0.92rem;
+      color: var(--warm-gray);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .nieuwsbrief-form {
+      background: white;
+      border-radius: 6px;
+      padding: 2rem;
+      border: 1px solid rgba(46, 74, 62, 0.1);
+      box-shadow: 0 4px 24px rgba(46, 74, 62, 0.05);
+      text-align: left;
+    }
+
+    .nieuwsbrief-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
     }
 
     /* ── Section base ── */
@@ -884,7 +959,8 @@ import Layout from '../layouts/Layout.astro';
         gap: 2.5rem;
       }
 
-      .form-row {
+      .form-row,
+      .nieuwsbrief-row {
         grid-template-columns: 1fr;
       }
 
@@ -932,8 +1008,8 @@ import Layout from '../layouts/Layout.astro';
         met anderen die begrijpen hoe dat voelt.
       </p>
       <div class="hero-actions">
-        <a href="#aanmelden" class="btn-primary">Meld je aan voor de pilot</a>
-        <a href="#over" class="btn-ghost">Lees meer ↓</a>
+        <a href="#aanmelden" class="btn-primary">Aanmelden voor de pilot</a>
+        <a href="#nieuwsbrief" class="btn-secondary">Nieuwsbrief</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -945,6 +1021,51 @@ import Layout from '../layouts/Layout.astro';
           <div class="ornament-dot"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Nieuwsbrief -->
+  <section class="nieuwsbrief-section" id="nieuwsbrief">
+    <div class="nieuwsbrief-inner fade-in">
+      <p class="section-label">Nieuwsbrief</p>
+      <h2>Blijf op de hoogte van<br /><em>Kindvrij Amsterdam</em></h2>
+      <p>
+        Nog niet klaar voor de pilot, of gewoon nieuwsgierig? Meld je aan
+        voor de nieuwsbrief en we houden je op de hoogte.
+      </p>
+      <form class="nieuwsbrief-form" id="nieuwsbrief-form">
+        <div id="nieuwsbrief-success" class="form-message" role="alert" aria-live="polite" style="display:none">
+          ✓ Gelukt! Je staat ingeschreven voor de nieuwsbrief.
+        </div>
+        <div id="nieuwsbrief-error" class="form-message" role="alert" aria-live="polite" style="display:none">
+          Er is iets misgegaan. Probeer het opnieuw.
+        </div>
+
+        <div class="nieuwsbrief-row">
+          <div class="form-group">
+            <label for="nb_first_name">Voornaam</label>
+            <input type="text" id="nb_first_name" name="first_name" placeholder="Jouw voornaam" autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="nb_email">E-mailadres *</label>
+            <input type="email" id="nb_email" name="email" required placeholder="jouw@email.nl" autocomplete="email" />
+          </div>
+        </div>
+
+        <label class="checkbox-group" for="nb_privacy">
+          <input type="checkbox" id="nb_privacy" name="privacy" required />
+          <span class="checkbox-label">
+            Ik ga akkoord met de <a href="/privacy" target="_blank">privacyverklaring</a>.
+            Je gegevens worden alleen gebruikt voor de nieuwsbrief.
+          </span>
+        </label>
+
+        <button type="submit" class="btn-submit" id="nieuwsbrief-submit-btn">
+          Inschrijven voor de nieuwsbrief
+        </button>
+
+        <p class="form-note">* Verplicht veld. Je kunt je altijd uitschrijven.</p>
+      </form>
     </div>
   </section>
 
@@ -1340,6 +1461,51 @@ import Layout from '../layouts/Layout.astro';
         praatgroepError.style.display = 'block';
         praatgroepBtn.disabled = false;
         praatgroepBtn.textContent = 'Aanmelden & betalen — € 7,50';
+      }
+    });
+
+    // ── Nieuwsbrief form ──
+    const nieuwsbriefForm = document.getElementById('nieuwsbrief-form') as HTMLFormElement;
+    const nieuwsbriefBtn = document.getElementById('nieuwsbrief-submit-btn') as HTMLButtonElement;
+    const nieuwsbriefSuccess = document.getElementById('nieuwsbrief-success') as HTMLElement;
+    const nieuwsbriefError = document.getElementById('nieuwsbrief-error') as HTMLElement;
+
+    nieuwsbriefForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      nieuwsbriefSuccess.style.display = 'none';
+      nieuwsbriefError.style.display = 'none';
+
+      const data = new FormData(nieuwsbriefForm);
+      nieuwsbriefBtn.disabled = true;
+      nieuwsbriefBtn.textContent = 'Bezig…';
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName: data.get('first_name'),
+            email: data.get('email'),
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          nieuwsbriefSuccess.classList.add('success');
+          nieuwsbriefSuccess.style.display = 'block';
+          nieuwsbriefForm.reset();
+          nieuwsbriefSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          throw new Error(result.error || 'Onbekende fout');
+        }
+      } catch (err) {
+        console.error(err);
+        nieuwsbriefError.classList.add('error');
+        nieuwsbriefError.style.display = 'block';
+      } finally {
+        nieuwsbriefBtn.disabled = false;
+        nieuwsbriefBtn.textContent = 'Inschrijven voor de nieuwsbrief';
       }
     });
 

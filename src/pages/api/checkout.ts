@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
       ageRange: ageRange || '',
     },
     success_url: `${import.meta.env.SITE_URL}/bedankt`,
-    cancel_url: `${import.meta.env.SITE_URL}/#praatgroep`,
+    cancel_url: `${import.meta.env.SITE_URL}/betaling-mislukt`,
   });
 
   return new Response(JSON.stringify({ url: session.url }), {

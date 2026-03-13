@@ -40,7 +40,7 @@ export const POST: APIRoute = async ({ request }) => {
             Leeftijdscategorie: ageRange || '',
           },
           status: 'SUBSCRIBED',
-          tags: ['praatgroep'],
+          tags: ['pilot'],
         }),
       }
     );
