@@ -991,7 +991,7 @@ import Layout from '../layouts/Layout.astro';
   <!-- Nav -->
   <nav class="nav">
     <a href="#" class="nav-logo">Kindvrij Amsterdam</a>
-    <a href="#aanmelden" class="nav-cta">Aanmelden</a>
+    <a href="#praatgroep" class="nav-cta">Aanmelden</a>
   </nav>
 
   <!-- Hero -->
@@ -1008,7 +1008,7 @@ import Layout from '../layouts/Layout.astro';
         met anderen die begrijpen hoe dat voelt.
       </p>
       <div class="hero-actions">
-        <a href="#aanmelden" class="btn-primary">Aanmelden voor de pilot</a>
+        <a href="#praatgroep" class="btn-primary">Aanmelden voor de pilot</a>
         <a href="#nieuwsbrief" class="btn-secondary">Nieuwsbrief</a>
       </div>
     </div>
@@ -1328,74 +1328,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- Aanmeldformulier -->
-  <section class="section form-section" id="aanmelden">
-    <div class="form-wrapper">
-      <div class="form-header fade-in">
-        <p class="section-label">Aanmelden</p>
-        <h2>Doe mee aan<br /><em>de pilot</em></h2>
-        <p>
-          Vul het formulier in en we nemen contact op zodra we meer details
-          hebben over de eerste bijeenkomst. Je zit nergens aan vast.
-        </p>
-      </div>
-
-      <form class="form fade-in" id="signup-form">
-        <div id="form-success" class="form-message" role="alert" aria-live="polite" style="display:none">
-          ✓ Bedankt! Je aanmelding is ontvangen. We nemen snel contact op.
-        </div>
-        <div id="form-error" class="form-message" role="alert" aria-live="polite" style="display:none">
-          Er is iets misgegaan. Probeer het opnieuw of stuur een e-mail.
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="first_name">Voornaam *</label>
-            <input type="text" id="first_name" name="first_name" required placeholder="Jouw voornaam" autocomplete="given-name" />
-          </div>
-          <div class="form-group">
-            <label for="last_name">Achternaam</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Optioneel" autocomplete="family-name" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="email">E-mailadres *</label>
-          <input type="email" id="email" name="email" required placeholder="jouw@email.nl" autocomplete="email" />
-        </div>
-
-        <div class="form-group">
-          <label for="age_range">Leeftijdscategorie</label>
-          <select id="age_range" name="age_range">
-            <option value="">Selecteer (optioneel)</option>
-            <option value="25-35">25–35 jaar</option>
-            <option value="35-45">35–45 jaar</option>
-            <option value="45+">45+</option>
-          </select>
-        </div>
-
-        <div class="form-divider"></div>
-
-        <label class="checkbox-group" for="privacy">
-          <input type="checkbox" id="privacy" name="privacy" required />
-          <span class="checkbox-label">
-            Ik ga akkoord met de <a href="/privacy" target="_blank">privacyverklaring</a>.
-            Je gegevens worden uitsluitend gebruikt om je op de hoogte te houden
-            van de praatgroep en worden nooit gedeeld met derden.
-          </span>
-        </label>
-
-        <button type="submit" class="btn-submit" id="submit-btn">
-          Aanmelden voor de pilot
-        </button>
-
-        <p class="form-note">
-          * Verplichte velden. Je kunt je altijd uitschrijven.
-        </p>
-      </form>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer class="footer">
     <p>
@@ -1509,56 +1441,5 @@ import Layout from '../layouts/Layout.astro';
       }
     });
 
-    // ── Form submission ──
-    const form = document.getElementById('signup-form') as HTMLFormElement;
-    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-    const successMsg = document.getElementById('form-success') as HTMLElement;
-    const errorMsg = document.getElementById('form-error') as HTMLElement;
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      successMsg.style.display = 'none';
-      errorMsg.style.display = 'none';
-
-      const data = new FormData(form);
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Bezig met aanmelden…';
-
-      try {
-        const response = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            firstName: data.get('first_name'),
-            lastName: data.get('last_name'),
-            email: data.get('email'),
-            ageRange: data.get('age_range'),
-          }),
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-          if (result.existing) {
-            successMsg.textContent = '✓ Je staat al ingeschreven — we zien je bij de pilot!';
-          }
-          successMsg.classList.add('success');
-          successMsg.style.display = 'block';
-          form.reset();
-          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        } else {
-          throw new Error(result.error || 'Onbekende fout');
-        }
-      } catch (err) {
-        console.error(err);
-        errorMsg.classList.add('error');
-        errorMsg.style.display = 'block';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Aanmelden voor de pilot';
-      }
-    });
   </script>
 </Layout>
